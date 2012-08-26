@@ -17,7 +17,7 @@ How to use:
 import com.illuzor.dialog.DialogManager;
 
 DialogManager.init(stage); // init must called one time
-DialogManager.addDialog("Just simple text...");
+DialogManager.addDialog("Just simple message");
 
 ![dm_simple_text.png](http://download.illuzor.com/images/github/DialogManager/dm_simple_text.png)
 
@@ -71,6 +71,7 @@ DialogManager.removeAllDialogs();
 You can define background colo and background alpha:
 
 DialogManager.backgroundColor = 0xFF00FF; // color uint
+
 DialogManager.backgroundAlpha = 0.5 // Number 0-1
 
 
