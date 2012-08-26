@@ -7,13 +7,9 @@ Simple dialog window manager. Version 0.1
 Features:
 	
 	- very simple to use;
-	
 	- autosize regardless text lenght and buttons number;
-	
 	- detecting stage resize and correcting background and dialog coordinates;
-	
 	- posible to show text only or text with buttons;
-	
 	- dialog queue;
 	
 	
@@ -43,11 +39,8 @@ How to use:
 	DialogManager.addDialog("You see this message", [ {label:"OK"} ] );
 
 	// first patameter is dialog text.
-
 	// second parameter is buttons array with Objects - {label:String, func:Function};
-
 	// func will called with conforming button press.
-
 	// if func undefined button click just close dialog.
 	
 
