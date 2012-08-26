@@ -22,52 +22,58 @@ How to use:
 	
 1) Simple text:
 	
-import com.illuzor.dialog.DialogManager;
+	
+	import com.illuzor.dialog.DialogManager;
 
-DialogManager.init(stage); // init must called one time
+	DialogManager.init(stage); // init must called one time
 
-DialogManager.addDialog("Just simple message");
+	DialogManager.addDialog("Just simple message");
+	
 
 ![dm_simple_text.png](http://download.illuzor.com/images/github/DialogManager/dm_simple_text.png)
 
 
 2) Text with any buttons number:
 
-import com.illuzor.dialog.DialogManager;
-
-DialogManager.init(stage);
-
-DialogManager.addDialog("You see this message", [ {label:"OK"} ] );
-
-// first patameter is dialog text.
-
-// second parameter is buttons array with Objects - {label:String, func:Function};
-
-// func will called with conforming button press.
-
-// if func undefined button click just close dialog.
-
-![dm_one_button.png](http://download.illuzor.com/images/github/DialogManager/dm_one_button.png)
-
-import com.illuzor.dialog.DialogManager;
-
-//...
-
-DialogManager.init(stage);
-
-DialogManager.addDialog("Do you want to do it?", [ {label:"YES", func:yesFunction}, {label:"NO", func:noFunction} ] );
-
-//...
-
-private function yesFunction():void {
 	
-	trace("YES pressed");
-	
-}
+	import com.illuzor.dialog.DialogManager;
 
-private function noFunction():void {
-	trace("NO pressed");
-}
+	DialogManager.init(stage);
+
+	DialogManager.addDialog("You see this message", [ {label:"OK"} ] );
+
+	// first patameter is dialog text.
+
+	// second parameter is buttons array with Objects - {label:String, func:Function};
+
+	// func will called with conforming button press.
+
+	// if func undefined button click just close dialog.
+
+	![dm_one_button.png](http://download.illuzor.com/images/github/DialogManager/dm_one_button.png)
+
+	import com.illuzor.dialog.DialogManager;
+
+	//...
+
+	DialogManager.init(stage);
+
+	DialogManager.addDialog("Do you want to do it?", [ {label:"YES", func:yesFunction}, {label:"NO", func:noFunction} ] );
+
+	//...
+
+	private function yesFunction():void {
+		
+		trace("YES pressed");
+		
+	}
+
+	private function noFunction():void {
+		
+		trace("NO pressed");
+		
+	}
+
 
 ![dm_two_buttons.png](http://download.illuzor.com/images/github/DialogManager/dm_two_buttons.png)
 	
@@ -86,16 +92,18 @@ DialogManager.removeDialog();
 
 5) Remove all dialogs:
 
-DialogManager.removeAllDialogs();
+
+	DialogManager.removeAllDialogs();
 
 
 6) Background parameters:
 
 You can define background color and background alpha:
+	
 
-DialogManager.backgroundColor = 0xFF00FF; // color uint
+	DialogManager.backgroundColor = 0xFF00FF; // color uint
 
-DialogManager.backgroundAlpha = 0.5 // Number 0-1
+	DialogManager.backgroundAlpha = 0.5 // Number 0-1
 
 
 Roboto font developed by Google Inc. licensed under the Apache license http://www.apache.org/licenses/LICENSE-2.0
