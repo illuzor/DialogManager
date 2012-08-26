@@ -49,8 +49,10 @@ How to use:
 	// func will called with conforming button press.
 
 	// if func undefined button click just close dialog.
+	
 
-	![dm_one_button.png](http://download.illuzor.com/images/github/DialogManager/dm_one_button.png)
+![dm_one_button.png](http://download.illuzor.com/images/github/DialogManager/dm_one_button.png)
+	
 
 	import com.illuzor.dialog.DialogManager;
 
@@ -63,15 +65,11 @@ How to use:
 	//...
 
 	private function yesFunction():void {
-		
 		trace("YES pressed");
-		
 	}
 
 	private function noFunction():void {
-		
 		trace("NO pressed");
-		
 	}
 
 
