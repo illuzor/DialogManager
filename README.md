@@ -85,7 +85,8 @@ You can add several dialogs at the same time. Next dialog will shows only after 
 
 4) Remove current dialog manually
 
-DialogManager.removeDialog();
+
+	DialogManager.removeDialog();
 
 
 5) Remove all dialogs:
