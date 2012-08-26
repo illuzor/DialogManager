@@ -22,7 +22,6 @@ How to use:
 	import com.illuzor.dialog.DialogManager;
 
 	DialogManager.init(stage); // init must called one time
-
 	DialogManager.addDialog("Just simple message");
 	
 
@@ -35,7 +34,6 @@ How to use:
 	import com.illuzor.dialog.DialogManager;
 
 	DialogManager.init(stage);
-
 	DialogManager.addDialog("You see this message", [ {label:"OK"} ] );
 
 	// first patameter is dialog text.
@@ -50,11 +48,8 @@ How to use:
 	import com.illuzor.dialog.DialogManager;
 
 	//...
-
 	DialogManager.init(stage);
-
 	DialogManager.addDialog("Do you want to do it?", [ {label:"YES", func:yesFunction}, {label:"NO", func:noFunction} ] );
-
 	//...
 
 	private function yesFunction():void {
@@ -94,7 +89,6 @@ You can define background color and background alpha:
 	
 
 	DialogManager.backgroundColor = 0xFF00FF; // color uint
-
 	DialogManager.backgroundAlpha = 0.5 // Number 0-1
 
 
