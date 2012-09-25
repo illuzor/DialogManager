@@ -11,28 +11,43 @@ package com.illuzor.dialog {
 	import flash.text.TextFormat;
 	
 	/**
-	 * ...
+	 * Dialog window
+	 * 
 	 * @author illuzor  //  illuzor.com
 	 */
 	
 	[Event(name = "askButtonPressed", type = "com.illuzor.ask.DialogEvent")]
 	
 	internal class Dialog extends Sprite {
-		
+		/** @private list of added buttons */
 		private var buttonsList:Array;
-		private var headerTextField:TextField;
-		private var title:String;
+		/** @private background rectangle of dialog */
 		private var background:Shape;
+		/** @private sprite for buttons adding */
 		private var buttonsContainer:Sprite;
+		/** @private text of dialog */
+		private var titleText:String;
+		/** @private text field for titleText */
+		private var headerTextField:TextField;
+		/** @private text format for headerTextField */
 		private var textFormat:TextFormat = new TextFormat("Roboto Regular", 13, 0x1A1A1A);
-		
+		/**
+		 * Dialog constructor. Init adding to stage and get parameters
+		 * 
+		 * @param	title text to be showed on dialog
+		 * @param	buttons array with buttons config
+		 */
 		public function Dialog(title:String, buttons:Array) {
-			this.title = title;
+			this.titleText = title;
 			this.buttonsList = buttons;
 
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
-		
+		/**
+		 * @private text field for titleText creating, adding dialog background shape
+		 * 
+		 * @param	e added to stage event
+		 */
 		private function onAddedToStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
@@ -42,7 +57,7 @@ package com.illuzor.dialog {
 			headerTextField = new TextField();
 			headerTextField.embedFonts = true;
 			headerTextField.selectable = false;
-			headerTextField.text = title;
+			headerTextField.text = titleText;
 			headerTextField.autoSize = TextFieldAutoSize.LEFT;
 			headerTextField.antiAliasType = AntiAliasType.ADVANCED;
 			headerTextField.y = 5;
@@ -52,7 +67,7 @@ package com.illuzor.dialog {
 			if(buttonsList)createButtons();
 			calculateSizes();
 		}
-		
+		/** @private creating buttons from list and adding to dialog */
 		private function createButtons():void {
 			buttonsContainer = new Sprite();
 			
@@ -81,7 +96,7 @@ package com.illuzor.dialog {
 			}
 			addChild(buttonsContainer);
 		}
-		
+		/** @private calculate sizes of background and buttons, sizes correction */
 		private function calculateSizes():void {
 			var windowWidth:uint;
 			var windowExtraHeight:uint = 12;
@@ -112,10 +127,11 @@ package com.illuzor.dialog {
 			background.graphics.drawRect(0, 0, windowWidth, this.height + windowExtraHeight);
 			background.graphics.endFill();
 		}
-		
+		/** @private one of buttons click. Call suitable function if it exists. Dispatch end event */
 		private function onButtonClick(e:MouseEvent):void {
+			e.currentTarget.removeEventListener(MouseEvent.CLICK, onButtonClick);
 			var index:uint = buttonsContainer.getChildIndex(e.currentTarget as DialogButton);
-			if (buttonsList[index].func != null) buttonsList[index].func.call();
+			if (buttonsList[index].func) buttonsList[index].func.call();
 			dispatchEvent(new DialogEvent(DialogEvent.BUTTON_PRESSED));
 		}
 		

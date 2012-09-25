@@ -9,7 +9,8 @@ package com.illuzor.dialog {
 	
 	internal class DialogEvent extends Event {
 		
-		public static const BUTTON_PRESSED:String = "askButtonPressed";
+		/** Dialog window button press */
+		public static const BUTTON_PRESSED:String = "dialogButtonPressed";
 		
 		public function DialogEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) { 
 			super(type, bubbles, cancelable);

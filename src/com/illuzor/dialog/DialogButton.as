@@ -9,21 +9,30 @@ package com.illuzor.dialog {
 	import flash.text.TextFormat;
 	
 	/**
-	 * ...
+	 * Button class for dialog window
+	 * 
 	 * @author illuzor  //  illuzor.com
 	 */
 	
 	internal class DialogButton extends Sprite {
-		
-		private var button:Sprite;
+		/** @private filled rectangle */
+		private var buttonBody:Sprite;
+		/** @private text field for button title */
 		private var buttonTextField:TextField;
+		/** @private width of button */
 		private var buttonWidth:uint;
 		
+		/**
+		 * Constructor creates button rectangle and button text field
+		 * 
+		 * @param	textFormat
+		 * @param	title
+		 */
 		public function DialogButton(textFormat:TextFormat, title:String) {
 			
-			button = new Sprite();
-			button.buttonMode = true;
-			addChild(button);
+			buttonBody = new Sprite();
+			buttonBody.buttonMode = true;
+			addChild(buttonBody);
 			
 			buttonTextField = new TextField();
 			buttonTextField.mouseEnabled = false;
@@ -36,51 +45,68 @@ package com.illuzor.dialog {
 			buttonTextField.setTextFormat(textFormat);
 			addChild(buttonTextField);
 		}
-		
+		/** Width of button */
 		public function set size(value:uint):void {
 			if (value < 70) value = 70;
 			buttonWidth = value;
 			
 			draw(0xE6E6E6);
 			
-			buttonTextField.x = (button.width - buttonTextField.width) / 2;
-			button.addEventListener(MouseEvent.MOUSE_OVER, onOver);
-			button.addEventListener(MouseEvent.MOUSE_OUT, onOut);
-			button.addEventListener(MouseEvent.MOUSE_DOWN, onDown);
-			button.addEventListener(MouseEvent.MOUSE_UP, onOver);
+			buttonTextField.x = (buttonBody.width - buttonTextField.width) / 2;
+			buttonBody.addEventListener(MouseEvent.MOUSE_OVER, onMouseEvent);
+			buttonBody.addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
+			buttonBody.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
+			buttonBody.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
+			
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
-		
-		private function onDown(e:MouseEvent):void {
-			draw(0xF8F8F8);
+		/**
+		 * @private button mouse event handler (over, out, down, up)
+		 * Drawing button body color according to event type
+		 * 
+		 * @param	e MouseEvent
+		 */
+		private function onMouseEvent(e:MouseEvent):void {
+			switch (e.type) {
+				case MouseEvent.MOUSE_OVER:
+				case MouseEvent.MOUSE_UP:
+					draw(0xC9C9C9);
+				break;
+				case MouseEvent.MOUSE_OUT:
+					draw(0xE6E6E6);
+				break;
+				case MouseEvent.MOUSE_DOWN:
+					draw(0xF8F8F8);
+				break;
+			}
 		}
-		
-		private function onOver(e:MouseEvent):void {
-			draw(0xC9C9C9);
-		}
-		
-		private function onOut(e:MouseEvent):void {
-			draw(0xE6E6E6);
-		}
-		
+		/**
+		 * @private drawing button body
+		 * 
+		 * @param	color color of button body
+		 */
 		private function draw(color:uint):void {
-			button.graphics.clear();
-			button.graphics.beginFill(color);
-			button.graphics.drawRect(0, 0, buttonWidth, 24);
-			button.graphics.endFill();
-			button.graphics.lineStyle(1,0xCECECE);
-			button.graphics.lineTo(buttonWidth, 0);
-			button.graphics.lineTo(buttonWidth, 24);
-			button.graphics.lineTo(0, 24);
-			button.graphics.lineTo(0, 0);
+			buttonBody.graphics.clear();
+			buttonBody.graphics.beginFill(color);
+			buttonBody.graphics.drawRect(0, 0, buttonWidth, 24);
+			buttonBody.graphics.endFill();
+			buttonBody.graphics.lineStyle(1,0xCECECE);
+			buttonBody.graphics.lineTo(buttonWidth, 0);
+			buttonBody.graphics.lineTo(buttonWidth, 24);
+			buttonBody.graphics.lineTo(0, 24);
+			buttonBody.graphics.lineTo(0, 0);
 		}
-		
+		/**
+		 * @private removed from stage handler. Clear all listeners
+		 * 
+		 * @param	e removed from stage event
+		 */
 		private function onRemoved(e:Event):void {
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
-			button.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
-			button.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
-			button.removeEventListener(MouseEvent.MOUSE_DOWN, onDown);
-			button.removeEventListener(MouseEvent.MOUSE_UP, onOver);
+			buttonBody.removeEventListener(MouseEvent.MOUSE_OVER, onMouseEvent);
+			buttonBody.removeEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
+			buttonBody.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
+			buttonBody.removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 		}
 		
 	}
