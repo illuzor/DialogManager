@@ -95,7 +95,7 @@ You can add several dialogs at the same time. Next dialog will shows only after 
 
 6) Background parameters:
 
-You can define background color and background alpha:
+You can define background color and alpha:
 	
 
 	DialogManager.backgroundColor = 0xFF00FF; // color uint
