@@ -1,7 +1,7 @@
 DialogManager
 =============
 
-Simple dialog window manager. Version 0.1
+Simple dialog window manager. Version 0.2
 
 
 Features:
@@ -14,6 +14,16 @@ Features:
 	
 	
 How to use:
+	
+	
+Version History:
+	
+	v 0.1
+	 - first release
+	
+	v 0.2
+	 - small refactoring and fixes
+	 - comments added
 	
 	
 1) Simple text:
