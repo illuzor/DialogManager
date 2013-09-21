@@ -16,7 +16,7 @@ package com.illuzor.dialog {
 	 * @author illuzor  //  illuzor.com
 	 */
 	
-	[Event(name = "askButtonPressed", type = "com.illuzor.ask.DialogEvent")]
+	[Event(name = "dialogButtonPressed", type = "com.illuzor.dialog.DialogEvent")]
 	
 	internal class Dialog extends Sprite {
 		/** @private list of added buttons */
@@ -31,6 +31,7 @@ package com.illuzor.dialog {
 		private var headerTextField:TextField;
 		/** @private text format for headerTextField */
 		private var textFormat:TextFormat = new TextFormat("Roboto Regular", 13, 0x1A1A1A);
+		
 		/**
 		 * Dialog constructor. Init adding to stage and get parameters
 		 * 
@@ -64,9 +65,10 @@ package com.illuzor.dialog {
 			headerTextField.setTextFormat(textFormat);
 			addChild(headerTextField);
 			
-			if(buttonsList)createButtons();
+			if (buttonsList) createButtons();
 			calculateSizes();
 		}
+		
 		/** @private creating buttons from list and adding to dialog */
 		private function createButtons():void {
 			buttonsContainer = new Sprite();
@@ -96,6 +98,7 @@ package com.illuzor.dialog {
 			}
 			addChild(buttonsContainer);
 		}
+		
 		/** @private calculate sizes of background and buttons, sizes correction */
 		private function calculateSizes():void {
 			var windowWidth:uint;
@@ -127,12 +130,24 @@ package com.illuzor.dialog {
 			background.graphics.drawRect(0, 0, windowWidth, this.height + windowExtraHeight);
 			background.graphics.endFill();
 		}
+		
 		/** @private one of buttons click. Call suitable function if it exists. Dispatch end event */
 		private function onButtonClick(e:MouseEvent):void {
 			e.currentTarget.removeEventListener(MouseEvent.CLICK, onButtonClick);
 			var index:uint = buttonsContainer.getChildIndex(e.currentTarget as DialogButton);
-			if (buttonsList[index].func) buttonsList[index].func.call();
+			if (buttonsList[index].func) buttonsList[index].func();
 			dispatchEvent(new DialogEvent(DialogEvent.BUTTON_PRESSED));
+		}
+		
+		/** clear */
+		public function dispose():void {
+			if(buttonsContainer){
+				for (var i:int = 0; i < buttonsContainer.numChildren; i++) {
+					var button:DialogButton = buttonsContainer.getChildAt(i) as DialogButton;
+					button.removeEventListener(MouseEvent.CLICK, onButtonClick);
+					button.dispose();
+				}
+			}
 		}
 		
 	}

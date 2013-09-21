@@ -12,12 +12,8 @@ package com.illuzor.dialog {
 		/** Dialog window button press */
 		public static const BUTTON_PRESSED:String = "dialogButtonPressed";
 		
-		public function DialogEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) { 
-			super(type, bubbles, cancelable);
-		} 
-		
-		public override function clone():Event { 
-			return new DialogEvent(type, bubbles, cancelable);
+		public function DialogEvent(type:String) { 
+			super(type, false, false);
 		} 
 		
 		public override function toString():String { 
@@ -25,5 +21,4 @@ package com.illuzor.dialog {
 		}
 		
 	}
-	
 }

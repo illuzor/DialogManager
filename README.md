@@ -1,7 +1,7 @@
 DialogManager
 =============
 
-Simple dialog window manager. Version 0.2
+Simple dialog window manager. Version 0.3
 
 
 Features:
@@ -12,10 +12,7 @@ Features:
 	- posible to show text only or text with buttons;
 	- dialog queue;
 	
-	
-How to use:
-	
-	
+
 Version History:
 	
 	v 0.1
@@ -24,8 +21,13 @@ Version History:
 	v 0.2
 	 - small refactoring and fixes
 	 - comments added
+	 
+	 v 0.3
+	 - font updated
+	 - bug fixes
 	
-	
+How to use:
+
 1) Simple text:
 	
 	
@@ -103,3 +105,4 @@ You can define background color and alpha:
 
 
 Roboto font developed by Google Inc. licensed under the Apache license http://www.apache.org/licenses/LICENSE-2.0
+http://www.google.com/fonts/specimen/Roboto

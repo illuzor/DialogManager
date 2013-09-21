@@ -1,7 +1,6 @@
 package com.illuzor.dialog {
 	
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
@@ -45,6 +44,7 @@ package com.illuzor.dialog {
 			buttonTextField.setTextFormat(textFormat);
 			addChild(buttonTextField);
 		}
+		
 		/** Width of button */
 		public function set size(value:uint):void {
 			if (value < 70) value = 70;
@@ -57,8 +57,6 @@ package com.illuzor.dialog {
 			buttonBody.addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
 			buttonBody.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			buttonBody.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
-			
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
 		/**
 		 * @private button mouse event handler (over, out, down, up)
@@ -96,13 +94,9 @@ package com.illuzor.dialog {
 			buttonBody.graphics.lineTo(0, 24);
 			buttonBody.graphics.lineTo(0, 0);
 		}
-		/**
-		 * @private removed from stage handler. Clear all listeners
-		 * 
-		 * @param	e removed from stage event
-		 */
-		private function onRemoved(e:Event):void {
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
+		
+		/** clear */
+		public function dispose():void {
 			buttonBody.removeEventListener(MouseEvent.MOUSE_OVER, onMouseEvent);
 			buttonBody.removeEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
 			buttonBody.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);

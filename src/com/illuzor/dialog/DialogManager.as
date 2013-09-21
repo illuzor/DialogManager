@@ -7,8 +7,8 @@ package com.illuzor.dialog {
 	/**
 	 * @author illuzor  //  illuzor.com
 	 * 
-	 * Simple lib to work with dialog windows.
-	 * Created with FlashDevelop 4.0.4(http://flashdevelop.org/) and Flex SDK 4.6.0(http://www.adobe.com/devnet/flex/flex-sdk-download.html)
+	 * Simple library to work with dialog windows.
+	 * Created with FlashDevelop 4.3.3(http://flashdevelop.org/) and Apache Flex SDK 4.10.0(http://flex.apache.org/)
 	 * 
 	 * Roboto font developed by Google Inc. licensed under the Apache license http://www.apache.org/licenses/LICENSE-2.0
 	 */
@@ -19,14 +19,12 @@ package com.illuzor.dialog {
 		private static var RobotoFontClass:Class;
 		/** @private application stage */
 		private static var stage:Stage;
-		/** @private state of dialog show at this moment */
+		/** @private is dialog showed at current moment */
 		private static var dialogShowed:Boolean;
 		/** @private current dialog to show */
 		private static var currentDialog:Dialog;
-		/** @private sprite with color for lock background elements and blackout */
+		/** @private sprite with color for locking background elements and blackout */
 		private static var background:Sprite;
-		/** @private is DialogManager inited at this moment */
-		private static var inited:Boolean;
 		/** @private list of added dialogs */
 		private static var dialogsList:Vector.<Dialog> = new Vector.<Dialog>();
 		/** @private color of background sprite */
@@ -40,10 +38,7 @@ package com.illuzor.dialog {
 		 * @param	stage the stage of application
 		 */
 		public static function init(stage:Stage):void {
-			if (!inited) {
-				DialogManager.stage = stage;
-				inited = true;
-			}
+			DialogManager.stage = stage;
 		}
 		/**
 		 * Add dialog to queue. If no dialog on stage, current dialog will be added to display list.
@@ -52,61 +47,67 @@ package com.illuzor.dialog {
 		 * @param	buttonsList array with Object - {title:String, func:Function}
 		 * title is button label.
 		 * func is function called on button press. Optional parameter.
-		 * If func not defined, dialog will just close.
+		 * If func not defined, dialog will just close after button click
 		 */
 		public static function addDialog(title:String, buttonsList:Array = null):void {
-			if (inited) {
+			if (stage) {
 				var dialog:Dialog = new Dialog(title, buttonsList);
 				dialogsList.push(dialog);
-				showDialog();
+				if (!dialogShowed) showDialog();
 			} else {
 				throw new Error("DialogManager necessary to be inited before add dialogs");
 			}
 		}
-		/** Removing current dialog from display list */
+		
+		/** Remove current dialog from display list */
 		public static function removeDialog():void {
 			if (dialogShowed) {
 				stage.removeChild(background);
 				background = null;
 				stage.removeChild(currentDialog);
+				currentDialog.dispose();
 				currentDialog = null;
 				dialogShowed = false;
 				stage.removeEventListener(Event.RESIZE, onStageResize);
+				if (dialogsList.length) showDialog();
 			}
-			showDialog();
 		}
-		/** Removing all dialogs queue and removing current dialog from display list */
+		
+		/** Remove all dialogs queue and remove current dialog from display list */
 		public static function removeAllDialogs():void {
+			for (var i:int = 0; i < dialogsList.length; i++) {
+				trace("remove", i, dialogsList.length)
+				dialogsList[i].dispose();
+			}
 			dialogsList = new Vector.<Dialog>();
 			removeDialog();
 		}
+		
 		/** @private Adding current dialog to display list */
 		private static function showDialog():void {
-			if (!dialogShowed && dialogsList.length > 0) {
-				
-				background = new Sprite();
-				stage.addChild(background);
-				
-				currentDialog = dialogsList[0];
-				dialogsList.splice(0, 1);
-				stage.addChild(currentDialog);
-				
-				dialogShowed = true;
-				currentDialog.addEventListener(DialogEvent.BUTTON_PRESSED, onButtonPressed);
-				stage.addEventListener(Event.RESIZE, onStageResize);
-				onStageResize();
-			}
+			background = new Sprite();
+			stage.addChild(background);
+			
+			currentDialog = dialogsList[0];
+			dialogsList.splice(0, 1);
+			stage.addChild(currentDialog);
+			
+			dialogShowed = true;
+			currentDialog.addEventListener(DialogEvent.BUTTON_PRESSED, onButtonPressed);
+			stage.addEventListener(Event.RESIZE, onStageResize);
+			onStageResize();
 		}
+		
 		/**
-		 * @private after button press remove dialog and show next dialog in queue (if exists)
+		 * @private after button press remove dialog
 		 * 
 		 * @param	e button press event
 		 */
 		private static function onButtonPressed(e:DialogEvent):void {
 			e.target.removeEventListener(DialogEvent.BUTTON_PRESSED, onButtonPressed);
 			removeDialog();
-			showDialog();
 		}
+		
 		/** @private drawing color on background sprite */
 		private static function drawBackground():void {
 			background.graphics.clear();
@@ -114,6 +115,7 @@ package com.illuzor.dialog {
 			background.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 			background.graphics.endFill();
 		}
+		
 		/**
 		 * @private stage resize handler for dialog position and background size correction
 		 * 
